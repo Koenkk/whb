@@ -17,8 +17,8 @@ body {
 }
 
 .circle-in-animation {
-  -webkit-animation: circle-in-animation 2.0s ease-in-out;
-  animation: circle-in-animation 2.0s ease-in-out;
+  -webkit-animation: circle-in-animation 1.6s ease-in-out;
+  animation: circle-in-animation 1.6s ease-in-out;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
