@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/whb/static/css/main.5438e38e.css",
+    "main.js": "/whb/static/js/main.78acbe32.js",
+    "service-worker.js": "/whb/service-worker.js",
+    "index.html": "/whb/index.html",
+    "main.5438e38e.css.map": "/whb/static/css/main.5438e38e.css.map",
+    "main.78acbe32.js.map": "/whb/static/js/main.78acbe32.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5438e38e.css",
+    "static/js/main.78acbe32.js"
+  ]
+}
