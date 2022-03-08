@@ -12,6 +12,11 @@ jobs:
         node-version: 16
     - name: Install dependencies
       run: npm ci
+    - name: Version
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        HASH=$(git rev-parse --short HEAD)
+        echo "export default \"#$HASH\";" > src/app/version.ts
     - name: Build
       run: npm run build
     - name: Deploy

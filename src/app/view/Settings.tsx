@@ -4,6 +4,7 @@ import { faXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import helper from '../helper';
+import version from '../version';
 
 type Props = {
     onCloseClick: () => void;
@@ -18,7 +19,6 @@ const settingsStyle: React.CSSProperties = {
     color: 'white', 
     display: 'flex', 
     flexDirection: 'column', 
-    paddingTop: '10px',
     position: 'fixed',
     width: '100%',
     height: '100%',
@@ -39,7 +39,7 @@ class Settings extends React.Component<Props, State> {
     render() {
         return (
             <div style={settingsStyle}>
-                <div style={{textAlign: 'right', paddingRight: '20px'}}>
+                <div style={{textAlign: 'right', paddingRight: '20px', paddingTop: '10px'}}>
                     <FontAwesomeIcon 
                         className='icon-button' 
                         icon={faXmark} 
@@ -58,6 +58,8 @@ class Settings extends React.Component<Props, State> {
                         onClick={() => this.addRound()} 
                     />
                 </div>
+                <div style={{flex: 1}}/>
+                <div style={{textAlign: 'center', fontSize: '0.5em', paddingBottom: '10px'}}>Version: {version}</div>
             </div>
         );
     }
