@@ -59,7 +59,7 @@ class Settings extends React.Component<Props, State> {
                     />
                 </div>
                 <div style={{flex: 1}}/>
-                <div style={{textAlign: 'center', fontSize: '0.5em', paddingBottom: '10px'}}>Version: {version}</div>
+                <div style={{textAlign: 'center', fontSize: '0.5em', paddingBottom: '20px'}}>Version: {version}</div>
             </div>
         );
     }

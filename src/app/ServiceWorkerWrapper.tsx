@@ -27,6 +27,7 @@ const ServiceWorkerWrapper: FC = () => {
       open={showReload}
       message="A new version is available!"
       onClick={reloadPage}
+      style={{marginBottom: '50px'}}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       action={
         <Button

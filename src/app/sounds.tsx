@@ -1,5 +1,3 @@
-console.log(window.location.href);
-
 const sounds = {
     startingRoundBreathe30Times: new Audio('/whb/sounds/starting_round_breathe_30_times.mp3'),
     _5More: new Audio('/whb/sounds/5_more.mp3'),
