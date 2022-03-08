@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Props = {text: string, onAnimationEnd?: () => void, animation?: 'in' | 'out' | null}
+type Props = {text?: string, onAnimationEnd?: () => void, animation?: 'in' | 'out' | null, children?: React.ReactNode}
 type State = {}
 
 const wrapperStyle: React.CSSProperties = {
@@ -44,7 +44,8 @@ class Circle extends React.Component<Props, State> {
         return (
             <div style={wrapperStyle}>
                 <div ref={this.circle} style={circleStyle} className={className}/>
-                <div style={textStyle}>{this.props.text}</div>
+                {this.props.text && <div style={textStyle}>{this.props.text}</div>}
+                {this.props.children}
             </div>
         )
     }

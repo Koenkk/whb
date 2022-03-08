@@ -1,13 +1,13 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay, faGear, faStop } from '@fortawesome/free-solid-svg-icons'
+import { faGear, faStop } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
     showSettingsButton: boolean;
+    showStopButton: boolean;
     text: string;
     subtext: string;
-    playing: boolean;
-    onPlayStopButtonClick: () => void;
+    onStopButtonClick: () => void;
     onSettingsButtonClick: () => void;
 }
 type State = {}
@@ -25,18 +25,20 @@ class Menu extends React.Component<Props, State> {
         return (
             <div style={menuStyle}>
                 <div style={{textAlign: 'right', paddingRight: '20px'}}>
-                    <FontAwesomeIcon 
-                        className='icon-button' 
-                        style={{marginRight: '30px'}} 
-                        icon={this.props.playing ? faStop : faPlay} 
-                        onClick={() => this.props.onPlayStopButtonClick()} 
-                    />
-                    <FontAwesomeIcon 
-                        className='icon-button' 
-                        icon={faGear} 
-                        style={{visibility: this.props.showSettingsButton ? 'visible' : 'hidden'}}
-                        onClick={() => this.props.onSettingsButtonClick()} 
-                    />
+                    {this.props.showStopButton && 
+                        <FontAwesomeIcon 
+                            className='icon-button' 
+                            icon={faStop} 
+                            onClick={() => this.props.onStopButtonClick()} 
+                        />
+                    }
+                    {this.props.showSettingsButton && 
+                        <FontAwesomeIcon 
+                            className='icon-button' 
+                            icon={faGear} 
+                            onClick={() => this.props.onSettingsButtonClick()} 
+                        />
+                    }
                 </div>
                 <div style={{textAlign: 'center'}}>
                     {this.props.text}

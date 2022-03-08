@@ -58,7 +58,10 @@ class App extends React.Component<Props, State> {
 
     renderStep() {
         if (this.state.step === 0) {
-            return <Step0/>
+            return <Step0 onDone={async () => {
+                await sounds.init();
+                this.setState({step: 1});
+            }}/>
         } else if (this.state.step === 1) {
             return <Step1 onDone={() => this.setState({step: 2})}/>
         } else if (this.state.step === 2) {
@@ -92,14 +95,11 @@ class App extends React.Component<Props, State> {
                 }
                 <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
                     <Menu
-                        playing={this.state.step !== 0} 
                         text={stepTitle[this.state.step]}
                         subtext={subtext}
+                        showStopButton={this.state.step !== 0}
                         showSettingsButton={this.state.step === 0}
-                        onPlayStopButtonClick={async () => {
-                            await sounds.init();
-                            this.setState({step: this.state.step === 0 ? 1 : 0, round: 0})
-                        }}
+                        onStopButtonClick={() => this.setState({step: 0, round: 0})}
                         onSettingsButtonClick={() => this.setState({showSettings: true})}
                     />
                     <div ref={this.contentWrapper} style={contentWrapperStyle}>
