@@ -8,6 +8,7 @@ import Step2 from './steps/Step2';
 import Step3 from './steps/Step3';
 import Step4 from './steps/Step4';
 import sounds from './sounds';
+import ServiceWorkerWrapper from './ServiceWorkerWrapper';
 
 type Props = {}
 type State = {
@@ -78,12 +79,14 @@ class App extends React.Component<Props, State> {
         } 
         return <div/>;
     }
+
     render() {
         const contentSize = Math.min(this.state.contentSize.height, this.state.contentSize.width);
         const subtext = this.state.step === 0 ? `${this.state.rounds.length} round(s)` : 
             `Round ${this.state.round + 1}/${this.state.rounds.length}`;
         return (
             <div style={{height: '100vh', width: '100vw', overflow: 'none'}}>
+                <ServiceWorkerWrapper/>
                 {this.state.showSettings && 
                     <Settings onCloseClick={() => this.setState({showSettings: false, rounds: helper.getSettings().rounds})}/>
                 }
