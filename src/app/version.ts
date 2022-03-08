@@ -1,2 +1,2 @@
-// eslint-disable-next-line
-export default "#dev";
+const version = "#dev";
+export default version;

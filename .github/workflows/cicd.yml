@@ -16,7 +16,8 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
         HASH=$(git rev-parse --short HEAD)
-        echo "export default \"#$HASH\";" > src/app/version.ts
+        echo "const version = \"#$HASH\"; export default version;" > src/app/version.ts
+        echo src/app/version.ts
     - name: Build
       run: npm run build
     - name: Deploy
