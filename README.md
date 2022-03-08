@@ -1,4 +1,7 @@
 # Wim Hof Breathing app
+
+Link: https://koenkk.github.io/whb/
+
 This app helps you in doing the Wim Hof breathing exercise. Before starting check:
 - https://www.wimhofmethod.com/breathing-exercises
 - https://www.youtube.com/watch?v=nzCaZQqAs9I
