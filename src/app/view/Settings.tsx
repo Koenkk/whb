@@ -80,7 +80,7 @@ class Settings extends React.Component<Props, State> {
 
     setRound(round: number, value: string) {
         const rounds = [...this.state.rounds];
-        rounds[round] = Math.max(10, Number(value));
+        rounds[round] = Math.max(0, Number(value));
         helper.setSettings({...helper.getSettings(), rounds: rounds});
         this.updateRounds();
     }
@@ -94,7 +94,7 @@ class Settings extends React.Component<Props, State> {
                     variant='filled'
                     label={`Round ${round + 1} retention time`}
                     type='number'
-                    value={this.state.rounds[round]}
+                    value={this.state.rounds[round].toString()}
                     onChange={(event) => this.setRound(round, event.target.value)}
                     InputProps={{
                         endAdornment: <InputAdornment position="start">seconds</InputAdornment>,

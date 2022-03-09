@@ -16,12 +16,14 @@ class Hello extends React.Component<Props, State> {
 
     componentDidMount() {
         this.timer = setInterval(() => {
-            this.setState({secondsLeft: this.state.secondsLeft - 1});
-            if (this.state.secondsLeft === 15) {
-                sounds.play('_15SecondsMore');
-            } else if (this.state.secondsLeft === 1) {
+            if (this.state.secondsLeft === 0) {
                 this.timer && clearInterval(this.timer);
                 this.props.onDone();
+            } else {
+                if (this.state.secondsLeft === 16) {
+                    sounds.play('_15SecondsMore');
+                }
+                this.setState({secondsLeft: this.state.secondsLeft - 1});
             }
         }, 1000);
 
