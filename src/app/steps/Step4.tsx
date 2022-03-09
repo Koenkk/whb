@@ -24,6 +24,7 @@ class Hello extends React.Component<Props, State> {
             this.setState({secondsLeft: this.state.secondsLeft - 1});
         }, 1000);
 
+        sounds.play('triangle');
         sounds.play('breathFullyInAndHold');
     }
 

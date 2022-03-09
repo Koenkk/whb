@@ -10,11 +10,12 @@ const sounds = {
     breatheOut: new Audio('/whb/sounds/breathe_out.mp3'),
     retentionBackground: new Audio('/whb/sounds/retention_background.mp3'),
     finishedWellDone: new Audio('/whb/sounds/finished_well_done.mp3'),
+    triangle: new Audio('/whb/sounds/triangle.mp3'),
 }
 
 type Sound = 'startingRoundBreathe30Times' | '_5More' | 'lastBreath' | 'holdYourBreath' | '_15SecondsMore' |
     'breathFullyInAndHold' | 'breatheOutRoundCompleted' | 'breatheIn' | 'breatheOut' | 'retentionBackground' | 
-    'finishedWellDone';
+    'finishedWellDone' | 'triangle';
 
 let initialised = false;
 

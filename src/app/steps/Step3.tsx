@@ -25,6 +25,7 @@ class Hello extends React.Component<Props, State> {
             }
         }, 1000);
 
+        sounds.play('triangle');
         sounds.play('retentionBackground');
         sounds.play('holdYourBreath');
     }
