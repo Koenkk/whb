@@ -39,6 +39,7 @@ async function unlockAudioContext(): Promise<void> {
             source.buffer = buffer;
             source.connect(context.destination);
             source.start(0);
+            initialised = true;
             setTimeout(() => r(), 1);
         })
     }
