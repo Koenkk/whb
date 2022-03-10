@@ -88,6 +88,11 @@ class Settings extends React.Component<Props, State> {
     renderRound(round: number): React.ReactElement {
         return (
             <div key={round} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <FontAwesomeIcon
+                    // Hidden icon to ensure centered
+                    style={{visibility: 'hidden', marginRight: '15px'}}
+                    icon={faXmark}
+                />
                 <TextField
                     style={{backgroundColor: 'white'}}
                     id='outlined-number'
