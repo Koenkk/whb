@@ -64,7 +64,7 @@ class App extends React.Component<Props, State> {
     renderStep() {
         if (this.state.step === 0) {
             return <Step0 onDone={async () => {
-                await sounds.init();
+                await sounds.unlockAudioContext();
                 this.noSleep.enable();
                 this.setState({step: 1});
             }}/>

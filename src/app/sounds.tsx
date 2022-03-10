@@ -1,50 +1,66 @@
-const sounds = {
-    startingRoundBreathe30Times: new Audio('/whb/sounds/starting_round_breathe_30_times.mp3'),
-    _5More: new Audio('/whb/sounds/5_more.mp3'),
-    lastBreath: new Audio('/whb/sounds/last_breath.mp3'),
-    holdYourBreath: new Audio('/whb/sounds/hold_your_breath.mp3'),
-    _15SecondsMore: new Audio('/whb/sounds/15_seconds_more.mp3'),
-    breathFullyInAndHold: new Audio('/whb/sounds/breath_fully_in_and_hold.mp3'),
-    breatheOutRoundCompleted: new Audio('/whb/sounds/breathe_out_round_completed.mp3'),
-    breatheIn: new Audio('/whb/sounds/breathe_in.mp3'),
-    breatheOut: new Audio('/whb/sounds/breathe_out.mp3'),
-    retentionBackground: new Audio('/whb/sounds/retention_background.mp3'),
-    finishedWellDone: new Audio('/whb/sounds/finished_well_done.mp3'),
-    triangle: new Audio('/whb/sounds/triangle.mp3'),
-}
-
 type Sound = 'startingRoundBreathe30Times' | '_5More' | 'lastBreath' | 'holdYourBreath' | '_15SecondsMore' |
     'breathFullyInAndHold' | 'breatheOutRoundCompleted' | 'breatheIn' | 'breatheOut' | 'retentionBackground' | 
     'finishedWellDone' | 'triangle';
 
+const sounds: {[s: string]: {url: string, buffer: AudioBuffer | null, source: AudioBufferSourceNode | null}} = {
+    startingRoundBreathe30Times: {url: '/whb/sounds/starting_round_breathe_30_times.mp3', buffer: null, source: null},
+    _5More: {url: '/whb/sounds/5_more.mp3', buffer: null, source: null},
+    lastBreath: {url: '/whb/sounds/last_breath.mp3', buffer: null, source: null},
+    holdYourBreath: {url: '/whb/sounds/hold_your_breath.mp3', buffer: null, source: null},
+    _15SecondsMore: {url: '/whb/sounds/15_seconds_more.mp3', buffer: null, source: null},
+    breathFullyInAndHold: {url: '/whb/sounds/breath_fully_in_and_hold.mp3', buffer: null, source: null},
+    breatheOutRoundCompleted: {url: '/whb/sounds/breathe_out_round_completed.mp3', buffer: null, source: null},
+    breatheIn: {url: '/whb/sounds/breathe_in.mp3', buffer: null, source: null},
+    breatheOut: {url: '/whb/sounds/breathe_out.mp3', buffer: null, source: null},
+    retentionBackground: {url: '/whb/sounds/retention_background.mp3', buffer: null, source: null},
+    finishedWellDone: {url: '/whb/sounds/finished_well_done.mp3', buffer: null, source: null},
+    triangle: {url: '/whb/sounds/triangle.mp3', buffer: null, source: null},
+}
+
+// @ts-ignore
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const context = new AudioContext();
+const gainNode = context.createGain();
+gainNode.gain.value = 1;
 let initialised = false;
 
-async function init(): Promise<void> {
-    // Required for iOS
-    // https://stackoverflow.com/questions/31776548/why-cant-javascript-play-audio-files-on-iphone-safari
+for (const value of Object.values(sounds)) {
+    window.fetch(value.url)
+        .then(response => response.arrayBuffer())
+        .then(arrayBuffer => context.decodeAudioData(arrayBuffer, audioBuffer => value.buffer = audioBuffer))
+}
+
+// Required for iOS: https://codepen.io/kslstn/pen/pagLqL
+async function unlockAudioContext(): Promise<void> {
     if (!initialised) {
-        return new Promise((resolve) => {
-            Object.values(sounds).forEach((a) => a.play());
-            setTimeout(() => {
-                for (const s of Object.values(sounds)) {
-                    s.pause();
-                }
-                initialised = true;
-                resolve();
-            }, 1);
+        return new Promise((r) => {
+            var buffer = context.createBuffer(1, 1, 22050);
+            var source = context.createBufferSource();
+            source.buffer = buffer;
+            source.connect(context.destination);
+            source.start(0);
+            setTimeout(() => r(), 1);
         })
     }
 }
 
 function play(sound: Sound): void {
-    const s = sounds[sound];
-    s.currentTime = 0;
-    s.play();
+    sounds[sound].source?.stop();
+    const buffer = sounds[sound].buffer;
+    if (buffer) {
+        const source = context.createBufferSource();
+        source.buffer = buffer;
+        source.connect(context.destination);
+        source.start();
+        sounds[sound].source = source;
+    }
 }
 
 function pauseAll() {
-    for (const s of Object.values(sounds)) s.pause();
+    for (const s of Object.values(sounds)) {
+        s.source?.stop();
+    }
 }
 
-const exp = {init, play, pauseAll}
+const exp = {unlockAudioContext, play, pauseAll}
 export default exp;
