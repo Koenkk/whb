@@ -92,7 +92,7 @@ class Settings extends React.Component<Props, State> {
                     style={{backgroundColor: 'white'}}
                     id='outlined-number'
                     variant='filled'
-                    label={`Round ${round + 1} retention time`}
+                    label={`Round ${round + 1} retention time (${helper.formatSeconds(this.state.rounds[round])} min)`}
                     type='number'
                     value={this.state.rounds[round].toString()}
                     onChange={(event) => this.setRound(round, event.target.value)}
