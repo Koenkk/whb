@@ -95,7 +95,7 @@ class App extends React.Component<Props, State> {
         const subtext = this.state.step === 0 ? `${this.state.rounds.length} round(s)` : 
             `Round ${this.state.round + 1}/${this.state.rounds.length}`;
         return (
-            <div style={{height: '100vh', width: '100vw', overflow: 'none'}}>
+            <div style={{height: '100vh', width: '100vw', overflow: 'none', backgroundColor: '#282c34', position: 'fixed'}}>
                 <ServiceWorkerWrapper/>
                 <PWAPrompt />
                 {this.state.showSettings && 
