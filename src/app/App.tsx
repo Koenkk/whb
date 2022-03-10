@@ -11,6 +11,7 @@ import sounds from './sounds';
 import ServiceWorkerWrapper from './ServiceWorkerWrapper';
 // @ts-ignore
 import PWAPrompt from 'react-ios-pwa-prompt';
+import NoSleep from 'nosleep.js';
 
 type Props = {}
 type State = {
@@ -34,9 +35,11 @@ const contentWrapperStyle = {flex: 1, margin: '5%', display: 'flex', justifyCont
 
 class App extends React.Component<Props, State> {
     contentWrapper: React.RefObject<HTMLDivElement>;
+    noSleep: NoSleep;
 
     constructor(props: Props) {
         super(props);
+        this.noSleep = new NoSleep();
         this.contentWrapper = React.createRef();
         this.state = {
             step: 0, showSettings: false, rounds: helper.getSettings().rounds, round: 0, 
@@ -62,6 +65,7 @@ class App extends React.Component<Props, State> {
         if (this.state.step === 0) {
             return <Step0 onDone={async () => {
                 await sounds.init();
+                this.noSleep.enable();
                 this.setState({step: 1});
             }}/>
         } else if (this.state.step === 1) {
@@ -76,6 +80,7 @@ class App extends React.Component<Props, State> {
             return <Step4 onDone={() => {
                 if (this.state.round + 1 === this.state.rounds.length) {
                     this.setState({step: 0, round: 0});
+                    this.noSleep.disable();
                     sounds.play('finishedWellDone');
                 } else {
                     this.setState({step: 1, round: this.state.round + 1})
