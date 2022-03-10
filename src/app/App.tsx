@@ -9,6 +9,8 @@ import Step3 from './steps/Step3';
 import Step4 from './steps/Step4';
 import sounds from './sounds';
 import ServiceWorkerWrapper from './ServiceWorkerWrapper';
+// @ts-ignore
+import PWAPrompt from 'react-ios-pwa-prompt';
 
 type Props = {}
 type State = {
@@ -90,6 +92,7 @@ class App extends React.Component<Props, State> {
         return (
             <div style={{height: '100vh', width: '100vw', overflow: 'none'}}>
                 <ServiceWorkerWrapper/>
+                <PWAPrompt />
                 {this.state.showSettings && 
                     <Settings onCloseClick={() => this.setState({showSettings: false, rounds: helper.getSettings().rounds})}/>
                 }
