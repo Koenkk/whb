@@ -22,8 +22,6 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 const context = new AudioContext();
 const gainNode = context.createGain();
 gainNode.gain.value = 1;
-let initialised = false;
-
 for (const value of Object.values(sounds)) {
     window.fetch(value.url)
         .then(response => response.arrayBuffer())
@@ -32,17 +30,14 @@ for (const value of Object.values(sounds)) {
 
 // Required for iOS: https://codepen.io/kslstn/pen/pagLqL
 async function unlockAudioContext(): Promise<void> {
-    if (!initialised) {
-        return new Promise((r) => {
-            var buffer = context.createBuffer(1, 1, 22050);
-            var source = context.createBufferSource();
-            source.buffer = buffer;
-            source.connect(context.destination);
-            source.start(0);
-            initialised = true;
-            setTimeout(() => r(), 1);
-        })
-    }
+    return new Promise((r) => {
+        var buffer = context.createBuffer(1, 1, 22050);
+        var source = context.createBufferSource();
+        source.buffer = buffer;
+        source.connect(context.destination);
+        source.start(0);
+        setTimeout(() => r(), 1);
+    })
 }
 
 function play(sound: Sound): void {
