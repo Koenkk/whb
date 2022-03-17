@@ -19,7 +19,7 @@ class Hello extends React.Component<Props, State> {
             if (this.state.secondsLeft === 1) {
                 this.timer && clearInterval(this.timer);
                 sounds.play('breatheOutRoundCompleted');
-                setTimeout(() => this.props.onDone(), 3000);                
+                setTimeout(() => this.props.onDone(), helper.constants.breatheInHoldCooldown * 1000);                
             }
             this.setState({secondsLeft: this.state.secondsLeft - 1});
         }, 1000);

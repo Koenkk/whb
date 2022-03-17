@@ -92,8 +92,11 @@ class App extends React.Component<Props, State> {
 
     render() {
         const contentSize = Math.min(this.state.contentSize.height, this.state.contentSize.width);
-        const subtext = this.state.step === 0 ? `${this.state.rounds.length} round(s)` : 
+        const totalTime = this.state.rounds.reduce((a, b) => a + b, 0) + (helper.staticRoundDuration * this.state.rounds.length);
+        const subtext = this.state.step === 0 ?
+            `${this.state.rounds.length} round(s), ${helper.formatSeconds(totalTime)} min.` :
             `Round ${this.state.round + 1}/${this.state.rounds.length}`;
+        
         return (
             <div style={{height: '100vh', width: '100vw', overflow: 'none', backgroundColor: '#282c34', position: 'fixed'}}>
                 <ServiceWorkerWrapper/>
