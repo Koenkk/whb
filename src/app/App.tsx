@@ -94,7 +94,7 @@ class App extends React.Component<Props, State> {
         const contentSize = Math.min(this.state.contentSize.height, this.state.contentSize.width);
         const totalTime = this.state.rounds.reduce((a, b) => a + b, 0) + (helper.staticRoundDuration * this.state.rounds.length);
         const subtext = this.state.step === 0 ?
-            `${this.state.rounds.length} round(s), ${helper.formatSeconds(totalTime)} min.` :
+            `${this.state.rounds.length} round(s), ${helper.formatSeconds(totalTime)} min. total` :
             `Round ${this.state.round + 1}/${this.state.rounds.length}`;
         
         return (
