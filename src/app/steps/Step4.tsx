@@ -3,7 +3,7 @@ import Circle from '../view/Circle';
 import helper from '../helper';
 import sounds from '../sounds';
 
-type Props = {onDone: () => void}
+type Props = {onDone: () => void,  duration: number}
 type State = {secondsLeft: number}
 
 class Hello extends React.Component<Props, State> {
@@ -11,7 +11,7 @@ class Hello extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        this.state = {secondsLeft: helper.constants.breatheInHoldDuration};
+        this.state = {secondsLeft: props.duration};
     }
 
     componentDidMount() {

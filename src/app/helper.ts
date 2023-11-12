@@ -34,7 +34,6 @@ function formatSeconds(seconds: number) {
 const constants = {
     countdownSeconds: 3,
     breathsPerRound: 30,
-    breatheInHoldDuration: 15,
     breatheInOutDuration: 3.1,
     breatheInHoldCooldown: 3,
 }
@@ -42,7 +41,7 @@ const constants = {
 const staticRoundDuration = 
     constants.countdownSeconds + // Step 1
     (constants.breathsPerRound * constants.breatheInOutDuration) + // Step2
-    constants.breatheInHoldDuration + constants.breatheInHoldCooldown; // Step4
+    constants.breatheInHoldCooldown; // Step4
 
 const helper = {getSettings, setSettings, formatSeconds, constants, staticRoundDuration}
 

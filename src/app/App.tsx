@@ -78,15 +78,17 @@ class App extends React.Component<Props, State> {
                 onDone={() => this.setState({step: 4})} 
                 duration={this.state.rounds[this.state.roundNumber].duration}/>
         } else if (this.state.step === 4) {
-            return <Step4 onDone={() => {
-                if (this.state.roundNumber + 1 === this.state.rounds.length) {
-                    this.setState({step: 0, roundNumber: 0});
-                    this.noSleep.disable();
-                    sounds.play('finishedWellDone');
-                } else {
-                    this.setState({step: 1, roundNumber: this.state.roundNumber + 1})
-                }
-            }}/>
+            return <Step4
+                onDone={() => {
+                    if (this.state.roundNumber + 1 === this.state.rounds.length) {
+                        this.setState({step: 0, roundNumber: 0});
+                        this.noSleep.disable();
+                        sounds.play('finishedWellDone');
+                    } else {
+                        this.setState({step: 1, roundNumber: this.state.roundNumber + 1})
+                    }
+                }}
+                duration={this.state.rounds[this.state.roundNumber].duration}/>
         } 
         return <div/>;
     }
