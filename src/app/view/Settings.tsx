@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import helper from '../helper';
 import {Round} from '../helper';
 import version from '../version';
-import { CardActions, CardHeader } from '@mui/material';
+import { CardActions } from '@mui/material';
 
 type Props = {
     onCloseClick: () => void;
