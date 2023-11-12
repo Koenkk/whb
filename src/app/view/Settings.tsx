@@ -3,9 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 import helper from '../helper';
 import {Round} from '../helper';
 import version from '../version';
+import { CardActions, CardHeader } from '@mui/material';
 
 type Props = {
     onCloseClick: () => void;
@@ -49,7 +53,7 @@ class Settings extends React.Component<Props, State> {
                 </div>
                 <div style={{textAlign: 'center'}}>
                     Rounds
-                    <div style={{paddingTop: '20px'}}>
+                    <div style={{paddingTop: '20px', paddingBottom: '20px'}}>
                         {this.state.rounds.map((r, i) => this.renderRound(i))}
                     </div>
                     <FontAwesomeIcon 
@@ -97,50 +101,61 @@ class Settings extends React.Component<Props, State> {
 
     renderRound(roundNumber: number): React.ReactElement {
         return (
-            <div key={roundNumber} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                <FontAwesomeIcon
-                    // Hidden icon to ensure centered
-                    style={{visibility: 'hidden', marginRight: '15px'}}
-                    icon={faXmark}
-                />
-                Round {roundNumber + 1}
-                <TextField
-                    style={{backgroundColor: 'white'}}
-                    id='outlined-number'
-                    variant='filled'
-                    label={`Retention time (${helper.formatSeconds(this.state.rounds[roundNumber].duration)} min)`}
-                    type='number'
-                    value={this.state.rounds[roundNumber].duration.toString()}
-                    onChange={(event) => this.updateRound(roundNumber, "duration", event.target.value)}
-                    InputProps={{
-                        endAdornment: <InputAdornment position="start">seconds</InputAdornment>,
-                    }}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
-                <TextField
-                    style={{backgroundColor: 'white'}}
-                    id='outlined-number'
-                    variant='filled'
-                    label={`Breathe in hold (${helper.formatSeconds(this.state.rounds[roundNumber].duration)} min)`}
-                    type='number'
-                    value={this.state.rounds[roundNumber].breatheInHold.toString()}
-                    onChange={(event) => this.updateRound(roundNumber, "breatheInHold", event.target.value)}
-                    InputProps={{
-                        endAdornment: <InputAdornment position="start">seconds</InputAdornment>,
-                    }}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
-                <FontAwesomeIcon 
-                    style={{visibility: roundNumber === 0 ? 'hidden' : 'visible', marginLeft: '15px'}}
-                    className='icon-button' 
-                    icon={faXmark}
-                    onClick={() => this.removeRound(roundNumber)}
-                />
-            </div>
+            // <div key={roundNumber} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <Card variant="outlined" style={{
+                display: 'block', 
+                justifyContent: 'center', 
+                alignItems: 'center'}}>
+                <Typography variant="h4">
+                    Round {roundNumber + 1}
+                </Typography>
+                <CardContent>
+                    <TextField
+                        style={{backgroundColor: 'white', display: 'flex'}}
+                        id='outlined-number'
+                        variant='filled'
+                        label={`Retention time (${helper.formatSeconds(this.state.rounds[roundNumber].duration)} min)`}
+                        type='number'
+                        value={this.state.rounds[roundNumber].duration.toString()}
+                        onChange={(event) => this.updateRound(roundNumber, "duration", event.target.value)}
+                        InputProps={{
+                            endAdornment: <InputAdornment position="start">seconds</InputAdornment>,
+                        }}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        size='small'
+                    />
+                    <TextField
+                        style={{backgroundColor: 'white', display: 'flex'}}
+                        id='outlined-number'
+                        variant='filled'
+                        label={`Breathe in hold (${helper.formatSeconds(this.state.rounds[roundNumber].duration)} min)`}
+                        type='number'
+                        value={this.state.rounds[roundNumber].breatheInHold.toString()}
+                        onChange={(event) => this.updateRound(roundNumber, "breatheInHold", event.target.value)}
+                        InputProps={{
+                            endAdornment: <InputAdornment position="start">seconds</InputAdornment>,
+                        }}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        size='small'
+                    />
+                </CardContent>
+                <CardActions style={{justifyContent: 'center'}}>
+                    <FontAwesomeIcon 
+                        style={{
+                            visibility: roundNumber === 0 ? 'hidden' : 'visible',
+                        }}
+                        className='icon-button' 
+                        icon={faXmark}
+                        onClick={() => this.removeRound(roundNumber)}
+                        
+                    />
+                </CardActions>
+            </Card>
+            // </div>
         );
     }
 }
