@@ -101,7 +101,6 @@ class Settings extends React.Component<Props, State> {
 
     renderRound(roundNumber: number): React.ReactElement {
         return (
-            // <div key={roundNumber} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <Card variant="outlined" style={{
                 display: 'block', 
                 justifyContent: 'center', 
