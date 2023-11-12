@@ -79,29 +79,54 @@ class Settings extends React.Component<Props, State> {
         this.updateRounds();
     }
 
-    setRound(round: number, value: string) {
+    updateRound(round: number, field: string, value: string) {
         const rounds = [...this.state.rounds];
-        rounds[round] = {duration: Math.max(0, Number(value)), breatheInHold: 15};
+        switch(field) {
+            case "duration": {
+                rounds[round].duration = Math.max(0, Number(value));
+                break;
+            }
+            case "breatheInHold": {
+                rounds[round].breatheInHold = Math.max(0, Number(value));
+                break;
+            }
+        }
         helper.setSettings({...helper.getSettings(), rounds: rounds});
         this.updateRounds();
     }
 
-    renderRound(round: number): React.ReactElement {
+    renderRound(roundNumber: number): React.ReactElement {
         return (
-            <div key={round} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <div key={roundNumber} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <FontAwesomeIcon
                     // Hidden icon to ensure centered
                     style={{visibility: 'hidden', marginRight: '15px'}}
                     icon={faXmark}
                 />
+                Round {roundNumber + 1}
                 <TextField
                     style={{backgroundColor: 'white'}}
                     id='outlined-number'
                     variant='filled'
-                    label={`Round ${round + 1} retention time (${helper.formatSeconds(this.state.rounds[round].duration)} min)`}
+                    label={`Retention time (${helper.formatSeconds(this.state.rounds[roundNumber].duration)} min)`}
                     type='number'
-                    value={this.state.rounds[round].toString()}
-                    onChange={(event) => this.setRound(round, event.target.value)}
+                    value={this.state.rounds[roundNumber].duration.toString()}
+                    onChange={(event) => this.updateRound(roundNumber, "duration", event.target.value)}
+                    InputProps={{
+                        endAdornment: <InputAdornment position="start">seconds</InputAdornment>,
+                    }}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
+                <TextField
+                    style={{backgroundColor: 'white'}}
+                    id='outlined-number'
+                    variant='filled'
+                    label={`Breathe in hold (${helper.formatSeconds(this.state.rounds[roundNumber].duration)} min)`}
+                    type='number'
+                    value={this.state.rounds[roundNumber].breatheInHold.toString()}
+                    onChange={(event) => this.updateRound(roundNumber, "breatheInHold", event.target.value)}
                     InputProps={{
                         endAdornment: <InputAdornment position="start">seconds</InputAdornment>,
                     }}
@@ -110,10 +135,10 @@ class Settings extends React.Component<Props, State> {
                     }}
                 />
                 <FontAwesomeIcon 
-                    style={{visibility: round === 0 ? 'hidden' : 'visible', marginLeft: '15px'}}
+                    style={{visibility: roundNumber === 0 ? 'hidden' : 'visible', marginLeft: '15px'}}
                     className='icon-button' 
                     icon={faXmark}
-                    onClick={() => this.removeRound(round)} 
+                    onClick={() => this.removeRound(roundNumber)}
                 />
             </div>
         );
