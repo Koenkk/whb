@@ -1,10 +1,19 @@
+export interface Round {
+    duration: number,
+    breatheInHold: number
+}
+
 interface Settings {
-    rounds: number[];
+    rounds: Round[];
     schemeLevel: 1;
 }
 
 const defaultSettings: Settings = {
-    rounds: [30, 60, 90], schemeLevel: 1
+    rounds: [
+        {duration: 30, breatheInHold: 15},
+        {duration: 60, breatheInHold: 15},
+        {duration: 90, breatheInHold: 15}],
+    schemeLevel: 1
 }
 
 function getSettings(): Settings {

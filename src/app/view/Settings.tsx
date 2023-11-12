@@ -4,6 +4,7 @@ import { faXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import helper from '../helper';
+import {Round} from '../helper';
 import version from '../version';
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
 }
 
 type State = {
-    rounds: number[];
+    rounds: Round[];
 }
 
 const settingsStyle: React.CSSProperties = {
@@ -74,13 +75,13 @@ class Settings extends React.Component<Props, State> {
     }
 
     addRound() {
-        helper.setSettings({...helper.getSettings(), rounds: [...this.state.rounds, 60]})
+        helper.setSettings({...helper.getSettings(), rounds: [...this.state.rounds, {duration: 60, breatheInHold: 15}]})
         this.updateRounds();
     }
 
     setRound(round: number, value: string) {
         const rounds = [...this.state.rounds];
-        rounds[round] = Math.max(0, Number(value));
+        rounds[round] = {duration: Math.max(0, Number(value)), breatheInHold: 15};
         helper.setSettings({...helper.getSettings(), rounds: rounds});
         this.updateRounds();
     }
@@ -97,7 +98,7 @@ class Settings extends React.Component<Props, State> {
                     style={{backgroundColor: 'white'}}
                     id='outlined-number'
                     variant='filled'
-                    label={`Round ${round + 1} retention time (${helper.formatSeconds(this.state.rounds[round])} min)`}
+                    label={`Round ${round + 1} retention time (${helper.formatSeconds(this.state.rounds[round].duration)} min)`}
                     type='number'
                     value={this.state.rounds[round].toString()}
                     onChange={(event) => this.setRound(round, event.target.value)}
