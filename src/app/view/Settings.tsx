@@ -106,14 +106,13 @@ class Settings extends React.Component<Props, State> {
                 justifyContent: 'center', 
                 alignItems: 'center'}}>
                 <Typography variant="h4">
-                    Round {roundNumber + 1}
+                    Round {roundNumber + 1} ({helper.formatSeconds(this.state.rounds[roundNumber].duration + this.state.rounds[roundNumber].breatheInHold)} min)
                 </Typography>
                 <CardContent>
                     <TextField
                         style={{backgroundColor: 'white', display: 'flex'}}
                         id='outlined-number'
                         variant='filled'
-                        label={`Retention time (${helper.formatSeconds(this.state.rounds[roundNumber].duration)} min)`}
                         type='number'
                         value={this.state.rounds[roundNumber].duration.toString()}
                         onChange={(event) => this.updateRound(roundNumber, "duration", event.target.value)}
@@ -129,7 +128,6 @@ class Settings extends React.Component<Props, State> {
                         style={{backgroundColor: 'white', display: 'flex'}}
                         id='outlined-number'
                         variant='filled'
-                        label={`Breathe in hold (${helper.formatSeconds(this.state.rounds[roundNumber].duration)} min)`}
                         type='number'
                         value={this.state.rounds[roundNumber].breatheInHold.toString()}
                         onChange={(event) => this.updateRound(roundNumber, "breatheInHold", event.target.value)}
