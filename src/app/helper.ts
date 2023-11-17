@@ -3,9 +3,14 @@ export interface Round {
     breatheInHold: number
 }
 
+interface Settings_v1 {
+    rounds: number[];
+    schemeLevel: 1;
+}
+
 interface Settings {
     rounds: Round[];
-    schemeLevel: 1;
+    schemeLevel: 2;
 }
 
 const defaultSettings: Settings = {
@@ -13,12 +18,37 @@ const defaultSettings: Settings = {
         {duration: 30, breatheInHold: 15},
         {duration: 60, breatheInHold: 15},
         {duration: 90, breatheInHold: 15}],
-    schemeLevel: 1
+    schemeLevel: 2
 }
 
 function getSettings(): Settings {
     const settings = window.localStorage.getItem('settings');
-    return settings ? JSON.parse(settings) : defaultSettings;
+    if (settings) {
+        const parsedSettings = JSON.parse(settings);
+        switch(parsedSettings.schemeLevel) {
+            case 1: {
+                return migrateSettings_v1(parsedSettings);
+            }
+            case 2: {
+                return parsedSettings;
+            }
+            default: {
+                return defaultSettings;
+            }
+        }
+    } else {
+        return defaultSettings;
+    }
+
+}
+
+function migrateSettings_v1(old: Settings_v1): Settings {
+    let newSettings: Settings = {
+        rounds: [],
+        schemeLevel: 2,
+    };
+    old.rounds.forEach(round => {newSettings.rounds.push({duration: round, breatheInHold: 15})})
+    return newSettings;
 }
 
 function setSettings(settings: Settings) {
