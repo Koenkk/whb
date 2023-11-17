@@ -1,15 +1,48 @@
-interface Settings {
+export interface Round {
+    duration: number,
+    breatheInHold: number
+}
+
+interface Settings_v1 {
     rounds: number[];
     schemeLevel: 1;
 }
 
+interface Settings {
+    rounds: Round[];
+    schemeLevel: 2;
+}
+
 const defaultSettings: Settings = {
-    rounds: [30, 60, 90], schemeLevel: 1
+    rounds: [
+        {duration: 30, breatheInHold: 15},
+        {duration: 60, breatheInHold: 15},
+        {duration: 90, breatheInHold: 15}],
+    schemeLevel: 2
 }
 
 function getSettings(): Settings {
     const settings = window.localStorage.getItem('settings');
-    return settings ? JSON.parse(settings) : defaultSettings;
+    if (settings) {
+        let parsedSettings = JSON.parse(settings);
+        if (parsedSettings.schemeLevel == 1) {
+            parsedSettings = migrateSettings_v1(parsedSettings);
+            setSettings(parsedSettings);
+        }
+        return parsedSettings;
+    } else {
+        return defaultSettings;
+    }
+
+}
+
+function migrateSettings_v1(old: Settings_v1): Settings {
+    let newSettings: Settings = {
+        rounds: [],
+        schemeLevel: 2,
+    };
+    old.rounds.forEach(round => {newSettings.rounds.push({duration: round, breatheInHold: 15})})
+    return newSettings;
 }
 
 function setSettings(settings: Settings) {
@@ -25,7 +58,6 @@ function formatSeconds(seconds: number) {
 const constants = {
     countdownSeconds: 3,
     breathsPerRound: 30,
-    breatheInHoldDuration: 15,
     breatheInOutDuration: 3.1,
     breatheInHoldCooldown: 3,
 }
@@ -33,7 +65,7 @@ const constants = {
 const staticRoundDuration = 
     constants.countdownSeconds + // Step 1
     (constants.breathsPerRound * constants.breatheInOutDuration) + // Step2
-    constants.breatheInHoldDuration + constants.breatheInHoldCooldown; // Step4
+    constants.breatheInHoldCooldown; // Step4
 
 const helper = {getSettings, setSettings, formatSeconds, constants, staticRoundDuration}
 
