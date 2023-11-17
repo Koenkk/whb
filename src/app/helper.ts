@@ -24,18 +24,12 @@ const defaultSettings: Settings = {
 function getSettings(): Settings {
     const settings = window.localStorage.getItem('settings');
     if (settings) {
-        const parsedSettings = JSON.parse(settings);
-        switch(parsedSettings.schemeLevel) {
-            case 1: {
-                return migrateSettings_v1(parsedSettings);
-            }
-            case 2: {
-                return parsedSettings;
-            }
-            default: {
-                return defaultSettings;
-            }
+        let parsedSettings = JSON.parse(settings);
+        if (parsedSettings.schemeLevel == 1) {
+            parsedSettings = migrateSettings_v1(parsedSettings);
+            setSettings(parsedSettings);
         }
+        return parsedSettings;
     } else {
         return defaultSettings;
     }
